@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Reverse String</title>
+</head>
+<style>
+	.container {
+		display: grid;
+		grid-template-columns: 50% 30% 20%;
+		column-gap: 5px;
+		row-gap: 10px;
+	}
+
+	#userText,
+	#convertedText {
+		height: 200px;
+		resize: none;
+		font-size: 15px;
+	}
+
+	#convertedText {
+		text-align: center;
+	}
+
+	#reverseBtn {
+		height: 30px;
+	}
+
+	.header {
+		text-align: center;
+	}
+
+	.btn:hover {
+		cursor: pointer;
+	}
+</style>
+
+<body>
+	<h1 class="header">Reverse String</h1>
+	<div class="container">
+		<textarea id="userText" placeholder="Please enter text here" onchange="getReverseString()"></textarea>
+		<textarea id="convertedText" placeholder="Reversed string will appear here"></textarea>
+		<button id="copyBtn" class="btn" onclick="copyTextToClipboard()">Copy text</button>
+		<!-- <button id="reverseBtn" class="btn" onclick="getReverseString()">Reverse String</button> -->
+	</div>
+	<script>
+		function copyTextToClipboard() {
+			var copyText = document.getElementById("convertedText");
+			copyText.select();
+			copyText.setSelectionRange(0, 99999);
+			document.execCommand("copy");
+		}
+		function reverseString(text) {
+			return (() => {
+				return text.split(" ").map((elem) => {
+					return elem.split("").reverse().join("")
+				})
+			})().join(" ")
+		}
+		function getReverseString() {
+			document.getElementById("convertedText").innerHTML = reverseString(document.getElementById("userText").value)
+		}
+	</script>
+</body>
+
+</html>
