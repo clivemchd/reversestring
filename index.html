@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Reverse String</title>
+	<title>esreveR gnirtS</title>
 </head>
 <style>
 	.container {
@@ -37,17 +37,42 @@
 	.btn:hover {
 		cursor: pointer;
 	}
+
+	#darkModeBtn {
+		float: right;
+		height: 30px;
+	}
+
+	.darkModeBg {
+		background: black;
+	}
+
+	.darkModeColor {
+		color: #8c8c8c
+	}
 </style>
 
-<body>
-	<h1 class="header">Reverse String</h1>
+<body id="bodySection">
+	<button id="darkModeBtn" class="btn" onclick="toggleColor()"></button>
+	<h2 class=" header">esreveR gnirtS</h2>
 	<div class="container">
 		<textarea id="userText" placeholder="Please enter text here" onkeyup="getReverseString()"></textarea>
-		<textarea id="convertedText" placeholder="Reversed string will appear here"></textarea>
+		<textarea id="convertedText" readonly placeholder="Reversed string will appear here"></textarea>
 		<button id="copyBtn" class="btn" onclick="copyTextToClipboard()">Copy text</button>
 		<!-- <button id="reverseBtn" class="btn" onclick="getReverseString()">Reverse String</button> -->
 	</div>
 	<script>
+		window.onload = function () {
+			init();
+			setDarkModeButtonText();
+		}
+		function setDarkModeButtonText() {
+			if (localStorage.getItem("darkMode") === "true") {
+				document.getElementById("darkModeBtn").innerHTML = "GO LIGHT";
+			} else {
+				document.getElementById("darkModeBtn").innerHTML = "GO DARK";
+			}
+		}
 		function copyTextToClipboard() {
 			var copyText = document.getElementById("convertedText");
 			copyText.select();
@@ -63,6 +88,41 @@
 		}
 		function getReverseString() {
 			document.getElementById("convertedText").innerHTML = reverseString(document.getElementById("userText").value)
+		}
+		function toggleColor() {
+			if (localStorage.getItem("darkMode") === "true") {
+				localStorage.setItem("darkMode", false);
+				document.getElementById("darkModeBtn").innerHTML = "GO DARK";
+				removeDarkMode();
+			} else {
+				localStorage.setItem("darkMode", true);
+				document.getElementById("darkModeBtn").innerHTML = "GO LIGHT";
+				setDarkMode();
+			}
+		}
+		function setDarkMode() {
+			var darkModeId = ["userText", "convertedText", "copyBtn", "bodySection", "darkModeBtn"]
+			darkModeId.map((elem) => {
+				var domElem = document.getElementById(elem)
+				domElem.classList.add("darkModeBg");
+				domElem.classList.add("darkModeColor");
+			});
+		}
+		function removeDarkMode() {
+			var darkModeId = ["userText", "convertedText", "copyBtn", "bodySection", "darkModeBtn"]
+			darkModeId.map((elem) => {
+				var domElem = document.getElementById(elem)
+				domElem.classList.remove("darkModeBg");
+				domElem.classList.remove("darkModeColor");
+			});
+		}
+		function init() {
+			if (localStorage.getItem("darkMode") === null) {
+				localStorage.setItem("darkMode", false);
+			}
+			if (localStorage.getItem("darkMode") === "true") {
+				setDarkMode();
+			}
 		}
 	</script>
 </body>
